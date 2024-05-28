@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl  = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  // Additional connection settings can be managed here or in the environment variables
+}
+
+// Definisi model JenisBarang
+model JenisBarang {
+  id     Int      @id @default(autoincrement())
+  nama   String
+  barang Barang[]
+}
+
+// Definisi model Barang
+model Barang {
+  id             Int         @id @default(autoincrement())
+  nama           String
+  stok           Int
+  dipinjam       Boolean     @default(false)
+  tanggalPinjam  DateTime?
+  tanggalKembali DateTime?
+  gambar         String      // URL gambar barang
+  jenisBarang    JenisBarang @relation(fields: [jenisBarangId], references: [id])
+  jenisBarangId  Int
+  peminjamans    Peminjaman[]
+}
+
+// Definisi model Admin
+model Admin {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  password String
+}
+
+// Definisi model Peminjaman
+model Peminjaman {
+  id            Int      @id @default(autoincrement())
+  barang        Barang   @relation(fields: [barangId], references: [id])
+  barangId      Int
+  tanggalPinjam DateTime
+  tanggalKembali DateTime?
+  penyewa       String
+}
