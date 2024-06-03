@@ -57,7 +57,7 @@ const TabelPeminjaman: React.FC<TabelPeminjamanProps> = ({ peminjamans, setPemin
                     >
                       Delete
                     </button>
-                    <Link href={'/barang/editpeminjaman'}>
+                    <Link href={`/barang/editpeminjaman/${peminjaman.id}`}>
                       <button
                         className="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-1 rounded"
                       >

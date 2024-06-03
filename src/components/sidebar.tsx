@@ -1,6 +1,7 @@
 import { HiOutlineHome, HiOutlineCube, HiOutlineBookOpen, HiOutlineLogout } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { SignOutButton } from "@clerk/nextjs";
 
 interface MenuItem {
   label: string;
@@ -12,7 +13,6 @@ const menuItems: MenuItem[] = [
   { label: 'Dashboard', href: '/dashboard', icon: <HiOutlineHome /> },
   { label: 'Our Product', href: '/barang/ourproduct', icon: <HiOutlineCube /> },
   { label: 'Manage Equipment', href: '/barang/managepeminjaman', icon: <HiOutlineBookOpen /> },
-  { label: 'Logout', href: '/logout', icon: <HiOutlineLogout /> },
 ];
 
 const Sidebar = () => {
@@ -62,6 +62,17 @@ const Sidebar = () => {
                 </a>
               </li>
             ))}
+            <li>
+              <SignOutButton>
+                <button className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                  <span className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                    <HiOutlineLogout />
+                  </span>
+
+                  <span className="flex-1 ml-3">Logout</span>
+                </button>
+              </SignOutButton>
+            </li>
           </ul>
         </div>
       </aside>

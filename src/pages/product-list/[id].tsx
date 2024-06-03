@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { prisma } from '@/lib/prisma';
 import { Barang } from '@/lib/admin';
 import { EditButton, DeleteButton } from '@/components/button';
+import Link from "next/link"
+import { IoAddSharp, IoPencil, IoTrashOutline } from "react-icons/io5";
 
 interface ProductListPageProps {
   barangs: Barang[];
@@ -19,6 +21,12 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ barangs }) => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8 text-center">OUR PRODUCT</h1>
+      <div className="flex justify-end mb-4">
+        <Link href={`/create/product/${id}`} className="inline-flex items-center space-x-1 text-white bg-sky-500 hover:bg-sky-600 px-4 py-[8px] rounded-md">
+            <IoAddSharp size={18}/>
+            Create
+        </Link>
+      </div>
       <div className="overflow-x-auto">
         <table className="table-auto w-full text-left">
           <thead className="text-sm text-gray-500 uppercase bg-gray-50">

@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from "@/lib/prisma";
 
 type ResponseData = {
     message?: string;
     Error?: any;
+    result?: string;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
@@ -18,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         }
 
         try {
-            await prisma?.jenisBarang.create({
+            await prisma.jenisBarang.create({
                 data: {
                     nama,
                 },
@@ -28,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             return res.status(500).json({ message: "Failed to create category" });
         }
 
-        res.status(200).json({ message: "Jenis barang berhasil dibuat" });
+        res.status(200).json({ message: "Jenis barang berhasil dibuat", result: nama });
     } else {
         res.setHeader("Allow", ["POST"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
