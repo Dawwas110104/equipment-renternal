@@ -10,8 +10,8 @@ const TambahPeminjaman = () => {
     const { id } = router.query;
 
     const [loading, setLoading] = useState(false);
-    const [barangId, setBarangId] = useState<number | undefined>(undefined);
-    const [barang, setBarang] = useState<any[]>([]);
+    const [barangId, setBarangId] = useState<any[]>([]);
+    const [barang, setBarang] = useState('');
     const [tanggalPinjam, setTanggalPinjam] = useState(new Date());
     const [tanggalKembali, setTanggalKembali] = useState(new Date());
     const [penyewa, setPenyewa] = useState('');
