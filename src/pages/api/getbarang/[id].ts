@@ -4,8 +4,8 @@ import { prisma } from "@/lib/prisma";
 type ResponseData = {
     message?: string;
     result?: any;
-    data?: string;
-    Error?: any;
+    data?: any;
+    Error?: string;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
@@ -17,17 +17,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 message: "ID query parameter is required",
             });
         }
+        
 
         const result = await prisma.barang.findFirst({
             where: { id: Number(id) }
         });
 
+        if (!result) {
+            return res.status(404).json({
+                message: "Data not found",
+            });
+        }
+
         return res.status(200).json({
             message: `succcess`,
-            data: result?.nama
+            result
         });
     } else {
-        res.setHeader("Allow", ["POST"]);
+        res.setHeader("Allow", ["GET"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }

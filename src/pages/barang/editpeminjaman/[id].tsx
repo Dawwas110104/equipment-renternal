@@ -27,8 +27,11 @@ const TambahPeminjaman = () => {
                     const result = await axios.get(`/api/editpeminjaman/${id}`);
                     setData(result.data.result);
 
-                    const resultBarang = await axios.get(`/api/getbarang/${id}`);
-                    setBarang(resultBarang.data.data);
+                    const resultBarang = await axios.get(`/api/getbarang/${result.data.result.barangId}`);
+                    setBarang(resultBarang.data.result.nama);
+
+                    setPenyewa(result.data.result.penyewa)
+                    setBarangId(result.data.result.barangId)
                 } catch (error) {
                     console.error("Error fetching data:", error);
                 } finally {
@@ -36,6 +39,7 @@ const TambahPeminjaman = () => {
                 }
             }
         };
+
 
         fetchBarang();
     }, [id]); // Tambahkan dependensi id untuk memastikan dijalankan ulang saat id berubah
@@ -45,6 +49,7 @@ const TambahPeminjaman = () => {
         e.preventDefault();
         setLoading(true);
         try {
+            console.log('masuk sebelum ke api')
             await axios.post(`/api/updatepeminjaman/${id}`, {
                 barangId,
                 barang,
@@ -52,6 +57,7 @@ const TambahPeminjaman = () => {
                 tanggalKembali,
                 penyewa
             });
+            console.log('masuk setelah ke api')
             router.push('/barang/managepeminjaman');
         } catch (error) {
             console.error("Error submitting form:", error);
